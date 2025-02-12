@@ -9,23 +9,10 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@Table(name = "servico")
 public class Servico {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String descricao;
-
-    private int preco;
-
-    @JoinTable(
-            name = "pessoa_servico",
-            joinColumns = @JoinColumn(name = "pessoa_id"),
-            inverseJoinColumns = @JoinColumn(name = "servico_id")
-    )
-    private List<Pessoa> pessoas;
-
-    @OneToMany
-    private List<Atendimento> atendimentos;
+    private Integer preco;
 }

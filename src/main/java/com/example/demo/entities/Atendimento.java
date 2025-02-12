@@ -9,25 +9,23 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@Table(name = "atendimento")
 public class Atendimento {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String status;
-
     private LocalDateTime horario;
+    private Integer valorPago;
 
-    @Column(name = "valor_pago")
-    private int valorPago;
-
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "servico_id")
     private Servico servico;
 
-    @OneToOne
-    private Pessoa profissional;
+    @ManyToOne
+    @JoinColumn(name = "pessoa_profissional_id")
+    private Profissional profissional;
 
-    @OneToOne
-    private Pessoa cliente;
+    @ManyToOne
+    @JoinColumn(name = "pessoa_cliente_id")
+    private Cliente cliente;
 }

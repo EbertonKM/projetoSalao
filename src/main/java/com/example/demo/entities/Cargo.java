@@ -9,14 +9,9 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@Table(name = "cargo")
 public class Cargo {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String descricao;
-
-    @OneToMany
-    private List<Pessoa> pessoas;
 }

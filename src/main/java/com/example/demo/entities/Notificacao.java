@@ -6,22 +6,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@Table(name = "notificacao")
 public class Notificacao {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String titulo;
-
     private String descricao;
-
     private LocalDateTime emissao;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
-
 }
