@@ -6,12 +6,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor
-public class Contato {
+public class Notificacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String titulo;
+
     private String descricao;
+
+    private LocalDateTime emissao;
+
+    @OneToOne
+    private Pessoa pessoa;
+
 }

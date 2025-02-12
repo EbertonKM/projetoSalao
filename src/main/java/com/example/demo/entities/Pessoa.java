@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.List;
 
 @Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor @ToString
-public class Aluno {
+public abstract class Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,9 +16,18 @@ public class Aluno {
 
     private String email;
 
-    private int idade;
+    private String telefone;
 
-    @OneToMany(mappedBy = "aluno")
-    private List<Contato> contatos;
+    @OneToOne
+    private Cargo cargo;
+
+    @ManyToMany(mappedBy = "pessoas")
+    private List<Servico> servicos;
+
+    @OneToMany
+    private List<Notificacao> notificacoes;
+
+    @OneToMany
+    private List<Atendimento> atendimentos;
 
 }
