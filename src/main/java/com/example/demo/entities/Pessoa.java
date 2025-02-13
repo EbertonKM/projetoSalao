@@ -18,8 +18,4 @@ public abstract class Pessoa {
     @ManyToOne
     @JoinColumn(name = "cargo_id", insertable = false, updatable = false)
     private Cargo cargo;
-
-    public String getNome() {
-        return this.nome;
-    }
 }
