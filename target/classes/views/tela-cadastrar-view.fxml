@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ListView?>
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.demo.controllers.TelaCadastrarController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+
+    <Label text="Informe seus dados" style="-fx-font-size: 20px;"/>
+
+    <VBox alignment="CENTER">
+        <Label text="Nome:" style="-fx-font-size: 20px;"/>
+        <TextField fx:id="nomeInputTextField" maxWidth="250"/>
+        <Label text="Email:" style="-fx-font-size: 20px;"/>
+        <TextField fx:id="emailInputTextField" maxWidth="250"/>
+        <Label text="Telefone:" style="-fx-font-size: 20px;"/>
+        <TextField fx:id="telefoneInputTextField" maxWidth="250"/>
+        <Label text="Senha:" style="-fx-font-size: 20px;"/>
+        <TextField fx:id="senhaInputTextField" maxWidth="250"/>
+        <Label text="Confirmar senha:" style="-fx-font-size: 20px;"/>
+        <TextField fx:id="confirmarSenhaInputTextField" maxWidth="250"/>
+    </VBox>
+    <Button text="Cadastrar" onAction="#onCadastrarButtonClick"/>
+
+</VBox>

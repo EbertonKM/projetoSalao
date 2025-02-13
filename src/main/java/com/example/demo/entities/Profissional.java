@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.List;
 
 @Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor @ToString
-@DiscriminatorValue("2") // Supondo que 2 seja Profissional
+@DiscriminatorValue("2") // ID 2 sendo Profissional
 public class Profissional extends Pessoa {
     @ManyToMany
     @JoinTable(name = "pessoa_has_servico",

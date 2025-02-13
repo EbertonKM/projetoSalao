@@ -5,14 +5,19 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ListView?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.demo.controllers.TelaInicialController">
   <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
   </padding>
 
-  <Label text="Cadastro Escolar" style="-fx-font-size: 20px;"/>
-
-  <Button text="Alunos" onAction="#onAlunosButtonClick"/>
+  <Label text="Login" style="-fx-font-size: 20px;"/>
+  <TextField fx:id="emailInputTextField" maxWidth="250"/>
+  <TextField fx:id="senhaInputTextField" maxWidth="250"/>
+  <Button text="Login" onAction="#onLoginButtonClick"/>
+  <Label text="Não tem perfil?" style="-fx-font-size: 20px;"/>
+  <Button text="Cadastrar-se" onAction="#onAbrirCadastrarButtonClick"/>
 
 </VBox>

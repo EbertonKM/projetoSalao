@@ -8,7 +8,7 @@ import lombok.*;
 import java.util.List;
 
 @Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor @ToString
-@DiscriminatorValue("1") // Supondo que 1 seja Cliente
+@DiscriminatorValue("1") // ID 1 sendo Cliente
 public class Cliente extends Pessoa {
     @OneToMany(mappedBy = "cliente")
     private List<Atendimento> atendimentos;
