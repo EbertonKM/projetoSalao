@@ -2,8 +2,11 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.Cliente;
 import com.example.demo.services.ContaService;
+import com.example.demo.telas.TelaInicial;
+import com.example.demo.utils.TextFieldUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -20,50 +23,49 @@ public class TelaCadastrarController {
     private TextField confirmarSenhaInputTextField;
 
     private final ContaService contaService;
+    private final TelaInicial telaInicial;
 
-    public TelaCadastrarController(ContaService contaService) {
+    public TelaCadastrarController(ContaService contaService, TelaInicial telaInicial) {
         this.contaService = contaService;
+        this.telaInicial = telaInicial;
     }
 
     @FXML
     public void initialize() {
-        //impede que espaços sejam digitados nos campos de senha
-        senhaInputTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\s*")) {
-                senhaInputTextField.setText(newValue.replaceAll("\s", ""));
-            }
-        });
-        confirmarSenhaInputTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\s*")) {
-                confirmarSenhaInputTextField.setText(newValue.replaceAll("\s", ""));
-            }
-        });
+        //impede que espaços sejam digitados nos campos de e-mail e senha
+        TextFieldUtils.impedirEspacos(emailInputTextField);
+        TextFieldUtils.impedirEspacos(senhaInputTextField);
+        TextFieldUtils.impedirEspacos(confirmarSenhaInputTextField);
         //impede que caracteres além de números sejam digitados no campo de telefone
-        telefoneInputTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                telefoneInputTextField.setText(newValue.replaceAll("\\D", ""));
-            }
-        });
+        TextFieldUtils.apenasNumeros(telefoneInputTextField);
+        //define regex para o e-mail
+        TextFieldUtils.definirRegexEmail(emailInputTextField);
     }
 
     @FXML
     private void onCadastrarButtonClick(){
-        if(camposPreenchidos()) {
-            System.out.println("CAMPOS VAZIOS, NOME EMAIL E SENHA PRECISAM SER PREENCHIDOS");
-        }else if(senhasBatem()) {
-            if(emailDisponivel()) {
-                Cliente cliente = new Cliente();
-                cliente.setNome(nomeInputTextField.getText());
-                cliente.setEmail(emailInputTextField.getText());
-                cliente.setTelefone(telefoneInputTextField.getText());
-                cliente.setSenha(senhaInputTextField.getText());
-                cliente.setCargo(contaService.cargoCliente());
-                contaService.salvar(cliente);
-                System.out.println("CLIENTE SALVO NO BANCO");
-            } else
-                System.out.println("EMAIL INDISPONÍVEL");
-        }else
+        if(camposVazios()) {
+            System.out.println("CAMPOS VAZIOS, TODOS PRECISAM SER PREENCHIDOS");
+        }else if(!senhasBatem()) {
             System.out.println("SENHAS NAO COINCIDEM");
+        }else if(!emailDisponivel()) {
+            System.out.println("EMAIL INDISPONÍVEL");
+        } else {
+            Cliente cliente = new Cliente();
+            cliente.setNome(nomeInputTextField.getText());
+            cliente.setEmail(emailInputTextField.getText());
+            cliente.setTelefone(telefoneInputTextField.getText());
+            cliente.setSenha(senhaInputTextField.getText());
+            cliente.setCargo(contaService.cargoCliente());
+            contaService.salvar(cliente);
+            System.out.println("CLIENTE SALVO NO BANCO");
+        }
+    }
+
+    @FXML
+    private void onVoltarButtonClick() {
+        Stage stage = (Stage) nomeInputTextField.getScene().getWindow();
+        telaInicial.abrir(stage);
     }
 
     private boolean senhasBatem() {
@@ -74,10 +76,10 @@ public class TelaCadastrarController {
         return contaService.emailDisponivel(emailInputTextField.getText());
     }
 
-    private boolean camposPreenchidos() {
-        return !nomeInputTextField.getText().isEmpty() &&
-                !emailInputTextField.getText().isEmpty() &&
-                !senhaInputTextField.getText().isEmpty() &&
-                !confirmarSenhaInputTextField.getText().isEmpty();
+    private boolean camposVazios() {
+        return nomeInputTextField.getText().isEmpty() ||
+                emailInputTextField.getText().isEmpty() ||
+                senhaInputTextField.getText().isEmpty() ||
+                confirmarSenhaInputTextField.getText().isEmpty();
     }
 }

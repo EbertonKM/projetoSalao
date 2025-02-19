@@ -5,16 +5,15 @@ import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TelaCadastrar {
+public class TelaInicial {
 
     AbridorJanela abridorJanela;
 
-    public TelaCadastrar(AbridorJanela abridorJanela) {
+    public TelaInicial(AbridorJanela abridorJanela) {
         this.abridorJanela = abridorJanela;
     }
 
     public void abrir(Stage stage) {
-        abridorJanela.alterarJanela("/views/tela-cadastrar-view.fxml", "Cadastre-se", stage);
+        abridorJanela.alterarJanela("/views/tela-inicial-view.fxml", "Realizar login", stage);
     }
-
 }

@@ -2,6 +2,7 @@ package com.example.demo.utils;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -30,6 +31,26 @@ public class AbridorJanela {
             stage.show();
         } catch (Exception e) {
             System.out.println("Erro ao abrir janela: " + e.getMessage());
+        }
+    }
+
+    public void alterarJanela(String fxmlPath, String titulo, Stage stage) {
+        try {
+            loader = fxmlLoader.load(fxmlPath);
+            Parent root = loader.getRoot();
+            Scene scene = stage.getScene();
+
+            if (scene == null) {
+                scene = new Scene(root);
+                stage.setScene(scene);
+            } else {
+                scene.setRoot(root);
+            }
+
+            stage.setTitle(titulo);
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Erro ao trocar tela: " + e.getMessage());
         }
     }
 
