@@ -28,6 +28,6 @@
         <TextField fx:id="confirmarSenhaInputTextField" maxWidth="250"/>
     </VBox>
     <Button text="Cadastrar" onAction="#onCadastrarButtonClick"/>
-    <Button text="Voltar" onAction="#onVoltarButtonClick"/>
+    <Button fx:id="voltarButton" text="Voltar" onAction="#onVoltarButtonClick"/>
 
 </VBox>

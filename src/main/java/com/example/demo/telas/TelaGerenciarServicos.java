@@ -5,16 +5,15 @@ import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TelaProfissional {
+public class TelaGerenciarServicos {
 
     AbridorJanela abridorJanela;
 
-    public TelaProfissional(AbridorJanela abridorJanela) {
+    public TelaGerenciarServicos(AbridorJanela abridorJanela) {
         this.abridorJanela = abridorJanela;
     }
 
-    public void abrir(Stage stage){
-        abridorJanela.alterarJanela("/views/tela-profissional-view.fxml", "Painel do profissional", stage);
+    public void abrir(Stage stage) {
+        abridorJanela.alterarJanela("/views/tela-cadastrar-view.fxml", "Cadastre-se", stage);
     }
-
 }

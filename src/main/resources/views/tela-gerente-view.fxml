@@ -19,6 +19,6 @@
     <Button text="Agendar Atendimento" onAction="#onAgendarAtendimentoButtonClick"/>
     <Button text="Consultar Agendamentos" onAction="#onConsultarAgendamentosButtonClick"/>
 
-    <Button text="Sair" onAction="#onSairButtonClick"/>
+    <Button fx:id="sairButton" text="Sair" onAction="#onSairButtonClick"/>
 
 </VBox>

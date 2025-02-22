@@ -5,6 +5,7 @@ import com.example.demo.services.ContaService;
 import com.example.demo.telas.TelaInicial;
 import com.example.demo.utils.TextFieldUtils;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Controller;
@@ -32,13 +33,10 @@ public class TelaCadastrarController {
 
     @FXML
     public void initialize() {
-        //impede que espaços sejam digitados nos campos de e-mail e senha
         TextFieldUtils.impedirEspacos(emailInputTextField);
         TextFieldUtils.impedirEspacos(senhaInputTextField);
         TextFieldUtils.impedirEspacos(confirmarSenhaInputTextField);
-        //impede que caracteres além de números sejam digitados no campo de telefone
         TextFieldUtils.apenasNumeros(telefoneInputTextField);
-        //define regex para o e-mail
         TextFieldUtils.definirRegexEmail(emailInputTextField);
     }
 
@@ -64,8 +62,7 @@ public class TelaCadastrarController {
 
     @FXML
     private void onVoltarButtonClick() {
-        Stage stage = (Stage) nomeInputTextField.getScene().getWindow();
-        telaInicial.abrir(stage);
+        telaInicial.abrir(null);
     }
 
     private boolean senhasBatem() {

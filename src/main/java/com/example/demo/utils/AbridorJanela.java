@@ -14,6 +14,7 @@ public class AbridorJanela {
 
     private final SpringFXMLLoader fxmlLoader;
     private FXMLLoader loader;
+    public static Stage stagePrincipal = null;
 
     public AbridorJanela(SpringFXMLLoader fxmlLoader) {
         this.fxmlLoader = fxmlLoader;
@@ -28,6 +29,8 @@ public class AbridorJanela {
             stage.setWidth(width);
             stage.setHeight(height);
             stage.setScene(new Scene(loader.getRoot()));
+            if(stagePrincipal == null)
+                stagePrincipal = stage;
             stage.show();
         } catch (Exception e) {
             System.out.println("Erro ao abrir janela: " + e.getMessage());
@@ -35,6 +38,8 @@ public class AbridorJanela {
     }
 
     public void alterarJanela(String fxmlPath, String titulo, Stage stage) {
+        if(stage == null)
+            stage = stagePrincipal;
         try {
             loader = fxmlLoader.load(fxmlPath);
             Parent root = loader.getRoot();

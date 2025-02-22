@@ -1,6 +1,7 @@
 package com.example.demo.telas;
 
 import com.example.demo.utils.AbridorJanela;
+import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,7 +13,7 @@ public class TelaCliente {
         this.abridorJanela = abridorJanela;
     }
 
-    public void abrir(){
-        abridorJanela.abrirNovaJanela("/views/tela-cliente-view.fxml", "Painel do Cliente", 700, 500);
+    public void abrir(Stage stage){
+        abridorJanela.alterarJanela("/views/tela-cliente-view.fxml", "Painel do cliente", stage);
     }
 }

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Atendimento {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String status;
+    private Status status;
     private LocalDateTime horario;
     private Integer valorPago;
 

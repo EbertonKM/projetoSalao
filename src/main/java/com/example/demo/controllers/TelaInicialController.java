@@ -9,8 +9,10 @@ import com.example.demo.telas.TelaCadastrar;
 import com.example.demo.telas.TelaCliente;
 import com.example.demo.telas.TelaGerente;
 import com.example.demo.telas.TelaProfissional;
+import com.example.demo.utils.ControleLogin;
 import com.example.demo.utils.TextFieldUtils;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Controller;
@@ -30,34 +32,23 @@ public class TelaInicialController {
     private final TelaGerente telaGerente;
     private final TelaProfissional telaProfissional;
 
-    private final TelaClienteController telaClienteController;
-    private final TelaGerenteController telaGerenteController;
-    private final TelaProfissionalController telaProfissionalController;
-
     public TelaInicialController(TelaCadastrar telaCadastrar,
                                  ContaService contaService,
                                  TelaCliente telaCliente,
                                  TelaProfissional telaProfissional,
-                                 TelaGerente telaGerente,
-                                 TelaClienteController telaClienteController,
-                                 TelaGerenteController telaGerenteController,
-                                 TelaProfissionalController telaProfissionalController) {
+                                 TelaGerente telaGerente) {
         this.telaCadastrar = telaCadastrar;
         this.contaService = contaService;
         this.telaCliente = telaCliente;
         this.telaGerente = telaGerente;
         this.telaProfissional = telaProfissional;
-        this.telaClienteController = telaClienteController;
-        this.telaGerenteController = telaGerenteController;
-        this.telaProfissionalController = telaProfissionalController;
     }
 
     @FXML
     public void initialize() {
-        //impede que espaços sejam digitados nos campos de login
+        ControleLogin.logout();
         TextFieldUtils.impedirEspacos(emailInputTextField);
         TextFieldUtils.impedirEspacos(senhaInputTextField);
-        //define regex para o e-mail
         TextFieldUtils.definirRegexEmail(emailInputTextField);
     }
 
@@ -69,21 +60,19 @@ public class TelaInicialController {
             Optional<Pessoa> pessoa = contaService.validarLogin(emailInputTextField.getText(), senhaInputTextField.getText());
             if(pessoa.isPresent()) {
                 Pessoa pessoaLogin = pessoa.get();
-                if(pessoaLogin instanceof Cliente) {
-                    //abrir painel Cliente
-                    System.out.println("Login Cliente");
-                    telaCliente.abrir();
-                    telaClienteController.definirLogin(pessoaLogin);
-                }else if(pessoaLogin instanceof Profissional) {
-                    //abrir painel Profissional
-                    System.out.println("Login Profissional");
-                    telaProfissional.abrir();
-                    telaProfissionalController.definirLogin(pessoaLogin);
-                }else if(pessoaLogin instanceof Gerente) {
-                    //abrir painel Gerente
-                    System.out.println("Login Gerente");
-                    telaGerente.abrir();
-                    telaGerenteController.definirLogin(pessoaLogin);
+                ControleLogin.definirLogin(pessoaLogin);
+                switch (pessoaLogin) {
+                    case Cliente cliente -> {
+                        telaCliente.abrir(null);
+                    }
+                    case Profissional profissional -> {
+                        telaProfissional.abrir(null);
+                    }
+                    case Gerente gerente -> {
+                        telaGerente.abrir(null);
+                    }
+                    default -> {
+                    }
                 }
             }else {
                 System.out.println("CREDENCIAIS INVÁLIDAS");
@@ -92,11 +81,30 @@ public class TelaInicialController {
     }
     @FXML
     private void onAbrirCadastrarButtonClick() {
-        Stage stage = (Stage) emailInputTextField.getScene().getWindow();
-        telaCadastrar.abrir(stage);
+        telaCadastrar.abrir(null);
     }
 
     private boolean camposVazios() {
         return emailInputTextField.getText().isEmpty() || senhaInputTextField.getText().isEmpty();
     }
+
+    //APAGAR ISSO AQUI DEPOIS E NAO ESQUECER DE APAGAR DO XML TAMBÉM !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    @FXML
+    private void clienteLogin(){
+        Optional<Pessoa> pessoa = contaService.validarLogin("cliente@gmail.com", "cliente");
+        ControleLogin.definirLogin(pessoa.get());
+        telaCliente.abrir(null);
+    }
+    @FXML
+    private void profissionalLogin(){
+        Optional<Pessoa> pessoa = contaService.validarLogin("profissional@gmail.com", "profissional");
+        ControleLogin.definirLogin(pessoa.get());
+        telaProfissional.abrir(null);
+    }
+    @FXML
+    private void gerenteLogin(){
+        Optional<Pessoa> pessoa = contaService.validarLogin("gerente@gmail.com", "gerente");
+        ControleLogin.definirLogin(pessoa.get());
+        telaGerente.abrir(null);
+    } //APAGAR ATÉ AQUI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
