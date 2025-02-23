@@ -12,5 +12,6 @@ import java.util.Optional;
 public interface PessoaRepository extends CrudRepository<Pessoa, Integer> {
     Optional<Pessoa> findByEmailAndSenha(String email, String senha);
     Optional<Pessoa> findByEmail(String email);
+    Optional<Pessoa> findByNome(String nome);
     List<Pessoa> getAllByCargo(Cargo cargo);
 }

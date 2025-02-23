@@ -69,7 +69,7 @@ public class TelaAgendamentosController {
 
         tabelaAgendamentos.getColumns().addAll(colunaServico, colunaHorario, colunaStatus);
 
-        Servico servico = new Servico(1, "Banho e tosa", 10);
+        Servico servico = new Servico(1, "Banho e tosa", 10, 1);
         Profissional profissional = new Profissional();
         Cliente cliente = new Cliente();
         ObservableList<Atendimento> atendimentos = FXCollections.observableArrayList(

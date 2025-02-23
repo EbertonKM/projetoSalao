@@ -15,10 +15,9 @@
 
     <Button text="Gerenciar Profissionais" onAction="#onGerenciarProfissionaisButtonClick"/>
     <Button text="Gerenciar Servicos" onAction="#onGerenciarServicosButtonClick"/>
-    <Button text="Gerar Relatório" onAction="#onGerarRelatorioButtonClick"/>
     <Button text="Agendar Atendimento" onAction="#onAgendarAtendimentoButtonClick"/>
     <Button text="Consultar Agendamentos" onAction="#onConsultarAgendamentosButtonClick"/>
 
-    <Button fx:id="sairButton" text="Sair" onAction="#onSairButtonClick"/>
+    <Button text="Sair" onAction="#onSairButtonClick"/>
 
 </VBox>

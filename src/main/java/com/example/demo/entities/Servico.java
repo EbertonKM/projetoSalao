@@ -15,4 +15,5 @@ public class Servico {
     private Integer id;
     private String descricao;
     private Integer preco;
+    private Integer ativo = 1;
 }

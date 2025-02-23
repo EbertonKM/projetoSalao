@@ -14,6 +14,6 @@ public class TelaGerenciarServicos {
     }
 
     public void abrir(Stage stage) {
-        abridorJanela.alterarJanela("/views/tela-cadastrar-view.fxml", "Cadastre-se", stage);
+        abridorJanela.alterarJanela("/views/tela-gerenciar-servicos-view.fxml", "Gerenciar serviços", stage);
     }
 }

@@ -32,6 +32,11 @@ public class ContaService {
         pessoaRepository.save(pessoa);
     }
 
+    public void setCargo(Pessoa pessoa,Cargo cargo) {
+        pessoa.setCargo(cargo);
+        salvar(pessoa);
+    }
+
     public Cargo cargoCliente() {
         return cargoRepository.findById(1);
     }

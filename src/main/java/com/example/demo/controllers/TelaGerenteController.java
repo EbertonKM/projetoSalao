@@ -2,8 +2,6 @@ package com.example.demo.controllers;
 
 import com.example.demo.telas.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.stage.Stage;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -31,11 +29,6 @@ public class TelaGerenteController {
     @FXML
     private void onGerenciarServicosButtonClick() {
         telaGerenciarServicos.abrir(null);
-    }
-
-    @FXML
-    private void onGerarRelatorioButtonClick() {
-        System.out.println("Relatório");
     }
 
     @FXML
