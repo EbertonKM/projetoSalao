@@ -4,6 +4,7 @@ import com.example.demo.entities.Cliente;
 import com.example.demo.entities.Gerente;
 import com.example.demo.entities.Profissional;
 import com.example.demo.entities.Servico;
+import com.example.demo.repositories.ServicoRepository;
 import com.example.demo.telas.TelaAgendarAtendimento;
 import com.example.demo.telas.TelaCliente;
 import com.example.demo.telas.TelaGerente;
@@ -15,14 +16,19 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.util.StringConverter;
 import org.springframework.stereotype.Controller;
 
+import javax.swing.text.html.Option;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class TelaAgendarAtendimentoController {
 
+    private final ServicoRepository servicoRepository;
     @FXML
     private ComboBox<Servico> servicoComboBox;
     @FXML
@@ -38,10 +44,11 @@ public class TelaAgendarAtendimentoController {
     private final TelaProfissional telaProfissional;
     private final TelaGerente telaGerente;
 
-    public TelaAgendarAtendimentoController(TelaCliente telaCliente, TelaProfissional telaProfissional, TelaGerente telaGerente) {
+    public TelaAgendarAtendimentoController(TelaCliente telaCliente, TelaProfissional telaProfissional, TelaGerente telaGerente, ServicoRepository servicoRepository) {
         this.telaCliente = telaCliente;
         this.telaProfissional = telaProfissional;
         this.telaGerente = telaGerente;
+        this.servicoRepository = servicoRepository;
     }
 
     @FXML
@@ -58,6 +65,19 @@ public class TelaAgendarAtendimentoController {
                 }
             }
         });
+        servicoComboBox.setConverter(new StringConverter<Servico>() {
+            @Override
+            public String toString(Servico servico) {
+                return servico != null ? servico.getDescricao() : "";
+            }
+            @Override
+            public Servico fromString(String string) {
+                Optional<Servico> servico = servicoRepository.findByDescricao(string);
+                return servico.orElse(null);
+            }
+        });
+        List<Servico> servicos = servicoRepository.findAllByAtivo(1);
+        servicoComboBox.getItems().addAll(servicos);
     }
 
     @FXML
