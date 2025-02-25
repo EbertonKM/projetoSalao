@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13/02/2025 às 02:22
+-- Tempo de geração: 25/02/2025 às 02:40
 -- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.0.30
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,13 +29,22 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `atendimento` (
   `id` int(11) NOT NULL,
-  `horario` datetime(6) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL,
+  `horario` datetime DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL,
   `valor_pago` int(11) DEFAULT NULL,
   `pessoa_cliente_id` int(11) DEFAULT NULL,
   `pessoa_profissional_id` int(11) DEFAULT NULL,
   `servico_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `atendimento`
+--
+
+INSERT INTO `atendimento` (`id`, `horario`, `status`, `valor_pago`, `pessoa_cliente_id`, `pessoa_profissional_id`, `servico_id`) VALUES
+(1, '2025-02-28 10:00:00', 0, 6000, 2, 4, 2),
+(2, '2025-03-06 17:00:00', 0, 4500, 2, 4, 1),
+(3, '2025-03-04 10:00:00', 0, 4500, 3, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -91,7 +100,11 @@ CREATE TABLE `pessoa` (
 --
 
 INSERT INTO `pessoa` (`cargo_id`, `id`, `email`, `nome`, `senha`, `telefone`) VALUES
-(3, 1, 'gerente@gmail.com', 'Usuário Gerente', 'gerente', '01234567890');
+(3, 1, 'gerente@gmail.com', 'Usuário Gerente', 'gerente', '01234567890'),
+(1, 2, 'cliente@gmail.com', 'Usuário Cliente', 'cliente', ''),
+(1, 3, 'miguel@gmail.com', 'Miguel Ramires', 'miguel', '47992934212'),
+(2, 4, 'profissional@gmail.com', 'Usuário Profissional', 'profissional', ''),
+(1, 6, 'teste@gmail.com', 'Teste', 'teste', '');
 
 -- --------------------------------------------------------
 
@@ -104,6 +117,14 @@ CREATE TABLE `pessoa_has_servico` (
   `servico_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `pessoa_has_servico`
+--
+
+INSERT INTO `pessoa_has_servico` (`pessoa_id`, `servico_id`) VALUES
+(4, 1),
+(4, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -113,8 +134,18 @@ CREATE TABLE `pessoa_has_servico` (
 CREATE TABLE `servico` (
   `id` int(11) NOT NULL,
   `descricao` varchar(255) DEFAULT NULL,
-  `preco` int(11) DEFAULT NULL
+  `preco` int(11) DEFAULT NULL,
+  `ativo` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `servico`
+--
+
+INSERT INTO `servico` (`id`, `descricao`, `preco`, `ativo`) VALUES
+(1, 'Corte masculino', 4500, 1),
+(2, 'Corte feminino', 6000, 1),
+(3, 'Manicure', 8900, 1);
 
 --
 -- Índices para tabelas despejadas
@@ -170,7 +201,7 @@ ALTER TABLE `servico`
 -- AUTO_INCREMENT de tabela `atendimento`
 --
 ALTER TABLE `atendimento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `cargo`
@@ -188,13 +219,13 @@ ALTER TABLE `notificacao`
 -- AUTO_INCREMENT de tabela `pessoa`
 --
 ALTER TABLE `pessoa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `servico`
 --
 ALTER TABLE `servico`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restrições para tabelas despejadas
