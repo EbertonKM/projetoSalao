@@ -1,11 +1,13 @@
 package com.example.demo.controllers;
 
 import com.example.demo.entities.*;
+import com.example.demo.repositories.AtendimentoRepository;
 import com.example.demo.telas.TelaCliente;
 import com.example.demo.telas.TelaGerente;
 import com.example.demo.telas.TelaProfissional;
 import com.example.demo.utils.ControleLogin;
 import com.example.demo.utils.NavegacaoUtils;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -16,10 +18,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class TelaAgendamentosController {
 
+    private final AtendimentoRepository atendimentoRepository;
     @FXML
     private TableView<Atendimento> tabelaAgendamentos;
 
@@ -29,10 +34,11 @@ public class TelaAgendamentosController {
 
     public TelaAgendamentosController(TelaCliente telaCliente,
                                       TelaProfissional telaProfissional,
-                                      TelaGerente telaGerente) {
+                                      TelaGerente telaGerente, AtendimentoRepository atendimentoRepository) {
         this.telaCliente = telaCliente;
         this.telaProfissional = telaProfissional;
         this.telaGerente = telaGerente;
+        this.atendimentoRepository = atendimentoRepository;
     }
 
     @FXML
@@ -40,67 +46,36 @@ public class TelaAgendamentosController {
 
     @FXML
     public void initialize() {
-        switch (ControleLogin.getLogin()) {
-            case Cliente cliente -> {
-                tabelaAgendamentosCliente();
-            }
-            case Profissional profissional -> {
-                tabelaAgendamentosProfissional();
-            }
-            case Gerente gerente -> {
-                tabelaAgendamentosGerente();
-            }
-            default -> {throw new RuntimeException("Nenhum login encontrado");}
-        }
-    }
-
-    @FXML
-    private void onVoltarButtonClick() {
-        NavegacaoUtils.voltarPainel(telaCliente, telaProfissional, telaGerente);
-    }
-
-    private void tabelaAgendamentosCliente() {
         TableColumn<Atendimento, String> colunaServico = new TableColumn<>("Serviço");
-        colunaServico.setCellValueFactory(new PropertyValueFactory<>("servico"));
+        colunaServico.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getServico().getDescricao()));
+
         TableColumn<Atendimento, LocalDateTime> colunaHorario = new TableColumn<>("Horário");
         colunaHorario.setCellValueFactory(new PropertyValueFactory<>("horario"));
+
         TableColumn<Atendimento, String> colunaStatus = new TableColumn<>("Status");
         colunaStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         tabelaAgendamentos.getColumns().addAll(colunaServico, colunaHorario, colunaStatus);
 
-        Servico servico = new Servico(1, "Banho e tosa", 10, 1);
-        Profissional profissional = new Profissional();
-        Cliente cliente = new Cliente();
-        ObservableList<Atendimento> atendimentos = FXCollections.observableArrayList(
-                new Atendimento(1, Status.AGENDADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(2, Status.CANCELADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(3, Status.REALIZADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(1, Status.AGENDADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(2, Status.CANCELADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(3, Status.REALIZADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(1, Status.AGENDADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(2, Status.CANCELADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(3, Status.REALIZADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(1, Status.AGENDADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(2, Status.CANCELADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(3, Status.REALIZADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(1, Status.AGENDADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(2, Status.CANCELADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(3, Status.REALIZADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(1, Status.AGENDADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(2, Status.CANCELADO, LocalDateTime.now(), 2, servico, profissional, cliente),
-                new Atendimento(3, Status.REALIZADO, LocalDateTime.now(), 2, servico, profissional, cliente)
-        );
+        List<Atendimento> atendimentosList = new ArrayList<>();
+        Pessoa login = ControleLogin.getLogin();
 
+        if(login instanceof Cliente) {
+            atendimentosList = atendimentoRepository.findAllByCliente((Cliente) login);
+        } else if(login instanceof Profissional) {
+            atendimentosList = atendimentoRepository.findAllByProfissional((Profissional) login);
+        } else if(login instanceof Gerente) {
+            atendimentosList = atendimentoRepository.findAll();
+        }
+
+        ObservableList<Atendimento> atendimentos = FXCollections.observableArrayList(atendimentosList);
         tabelaAgendamentos.setItems(atendimentos);
     }
 
-    private void tabelaAgendamentosProfissional() {
 
-    }
-
-    private void tabelaAgendamentosGerente() {
-
+    @FXML
+    private void onVoltarButtonClick() {
+        NavegacaoUtils.voltarPainel(telaCliente, telaProfissional, telaGerente);
     }
 }

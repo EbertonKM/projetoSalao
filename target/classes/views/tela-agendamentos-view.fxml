@@ -13,6 +13,6 @@
 
     <TableView fx:id="tabelaAgendamentos" prefHeight="200" prefWidth="400"/>
 
-    <Button text="Voltar" onAction="#onVoltarButtonClick"/>
+    <Button text="Voltar" onAction="#onVoltarButtonClick" maxWidth="250"/>
 
 </VBox>

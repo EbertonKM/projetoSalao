@@ -16,17 +16,17 @@
 
     <Label text="Novo serviço:"/>
     <Label text="Descrição:"/>
-    <TextField fx:id="descricaoTextField"/>
+    <TextField fx:id="descricaoTextField" maxWidth="250"/>
     <Label text="Preço:"/>
-    <TextField fx:id="precoTextField"/>
-    <Button text="Novo" onAction="#onNovoButtonClick"/>
-    <Button text="Excluir" onAction="#onExcluirButtonClick"/>
+    <TextField fx:id="precoTextField" maxWidth="250"/>
+    <Button text="Novo" onAction="#onNovoButtonClick" maxWidth="250"/>
+    <Button text="Excluir" onAction="#onExcluirButtonClick" maxWidth="250"/>
 
     <ListView fx:id="tabelaServicos" prefHeight="200" prefWidth="400"/>
 
-    <TextField fx:id="novoPrecoTextField"/>
-    <Button text="Definir preço" onAction="#onDefinirPrecoButtonClick"/>
+    <TextField fx:id="novoPrecoTextField" maxWidth="250"/>
+    <Button text="Definir preço" onAction="#onDefinirPrecoButtonClick" maxWidth="250"/>
 
-    <Button text="Voltar" onAction="#onVoltarButtonClick"/>
+    <Button text="Voltar" onAction="#onVoltarButtonClick" maxWidth="250"/>
 
 </VBox>

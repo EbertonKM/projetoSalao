@@ -13,9 +13,9 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
-    <Button text="Agendar Atendimento" onAction="#onAgendarAtendimentoButtonClick"/>
-    <Button text="Consultar Agendamentos" onAction="#onConsultarAgendamentosButtonClick"/>
+    <Button text="Agendar Atendimento" onAction="#onAgendarAtendimentoButtonClick" maxWidth="250"/>
+    <Button text="Consultar Agendamentos" onAction="#onConsultarAgendamentosButtonClick" maxWidth="250"/>
 
-    <Button fx:id="sairButton" text="Sair" onAction="#onSairButtonClick"/>
+    <Button fx:id="sairButton" text="Sair" onAction="#onSairButtonClick" maxWidth="250"/>
 
 </VBox>

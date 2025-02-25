@@ -16,15 +16,15 @@
   <Label text="Login" style="-fx-font-size: 20px;"/>
   <TextField fx:id="emailInputTextField" maxWidth="250"/>
   <TextField fx:id="senhaInputTextField" maxWidth="250"/>
-  <Button fx:id="loginButton" text="Login" onAction="#onLoginButtonClick"/>
+  <Button fx:id="loginButton" text="Login" onAction="#onLoginButtonClick" maxWidth="250" />
 
   <Label text="Não tem perfil?" style="-fx-font-size: 20px;"/>
-  <Button text="Cadastrar-se" onAction="#onAbrirCadastrarButtonClick"/>
+  <Button text="Cadastrar-se" onAction="#onAbrirCadastrarButtonClick" maxWidth="250"/>
 
   <!--!!!!!!!!!!!!!!!!!!!!!!!APAGAR DEPOIS !!!!!!!!!!!!!!!!!!!!!!-->
-  <Button fx:id="cb" text="Login cliente@gmail.com" onAction="#clienteLogin"/>
-  <Button fx:id="pb" text="Login profissional@gmail.com" onAction="#profissionalLogin"/>
-  <Button fx:id="gb" text="Login gerente@gmail.com" onAction="#gerenteLogin"/>
+  <Button fx:id="cb" text="Login cliente@gmail.com" onAction="#clienteLogin" maxWidth="250"/>
+  <Button fx:id="pb" text="Login profissional@gmail.com" onAction="#profissionalLogin" maxWidth="250"/>
+  <Button fx:id="gb" text="Login gerente@gmail.com" onAction="#gerenteLogin" maxWidth="250"/>
   <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
 </VBox>

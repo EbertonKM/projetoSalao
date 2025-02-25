@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Controller;
 
@@ -31,6 +32,10 @@ public class TelaGerenciarProfissionaisController {
     private ListView<String> tabelaProfissionais;
     @FXML
     private VBox servicosContainer;
+    @FXML
+    private TextField novoNomeTextField;
+    @FXML
+    private TextField novoEmailTextField;
 
     private Profissional profissionalSelecionado;
 
@@ -68,7 +73,18 @@ public class TelaGerenciarProfissionaisController {
 
     @FXML
     private void onNovoButtonClick() {
-
+        if(novoEmailTextField.getText() != null && novoEmailTextField.getText() != null) {
+            Pessoa profissional = new Profissional();
+            profissional.setNome(novoNomeTextField.getText());
+            profissional.setEmail(novoEmailTextField.getText());
+            profissional.setCargo(contaService.cargoProfissional());
+            profissional.setSenha("0000");
+            profissional.setTelefone(null);
+            pessoaRepository.save(profissional);
+            novoNomeTextField.setText("");
+            novoEmailTextField.setText("");
+            popularProfissionais();
+        }
     }
 
     @FXML
@@ -99,12 +115,13 @@ public class TelaGerenciarProfissionaisController {
         if(tabelaProfissionais.getSelectionModel().getSelectedItem() == null)
             return;
         if(ConfirmacaoUtils.confirmacao("Exclusão", "Deseja realmente excluir este profissional?")) {
-            String nome = tabelaProfissionais.getSelectionModel().getSelectedItem().split(" ")[0];
-            Optional<Pessoa> profissional = pessoaRepository.findByNome(nome);
+            String email = tabelaProfissionais.getSelectionModel().getSelectedItem().split("\\[")[1].split("]")[0];
+            Optional<Pessoa> profissional = pessoaRepository.findByEmail(email);
             Pessoa pessoaProfissional;
             if(profissional.isPresent()) {
                 pessoaProfissional = profissional.get();
-                contaService.setCargo(pessoaProfissional, contaService.cargoCliente());
+                pessoaRepository.delete(pessoaProfissional);
+                popularProfissionais();
             }else
                 throw new RuntimeException("Profissional da exclusão não foi encontrado");
         }

@@ -27,7 +27,7 @@
         <DatePicker fx:id="dataDatePicker" maxWidth="250"/>
         <ComboBox fx:id="horarioComboBox" maxWidth="250"/>
     </VBox>
-    <Button text="Agendar" onAction="#onAgendarButtonClick"/>
-    <Button fx:id="voltarButton" text="Voltar" onAction="#onVoltarButtonClick"/>
+    <Button text="Agendar" onAction="#onAgendarButtonClick" maxWidth="250"/>
+    <Button fx:id="voltarButton" text="Voltar" onAction="#onVoltarButtonClick" maxWidth="250"/>
 
 </VBox>

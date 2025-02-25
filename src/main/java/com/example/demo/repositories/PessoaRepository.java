@@ -14,4 +14,5 @@ public interface PessoaRepository extends CrudRepository<Pessoa, Integer> {
     Optional<Pessoa> findByEmail(String email);
     Optional<Pessoa> findByNome(String nome);
     List<Pessoa> getAllByCargo(Cargo cargo);
+    Optional<Pessoa> findByCargo(Cargo cargo);
 }
